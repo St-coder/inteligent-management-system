@@ -1,9 +1,124 @@
-import { useNavigate  } from "react-router-dom";
-const Login = function(){
-    const navigate = useNavigate()
+import logo from "../../assets/logo.png"
+import bg from "../../assets/bg.jpg"
+import lgbg from "../../assets/lgbg.jpg"
+import './index.scss'
+import { Button, Form, Input } from 'antd';
+import { UserOutlined, LockOutlined } from '@ant-design/icons';
+
+import http from "../../utils/http";
+import { useEffect } from "react";
+
+const Login = function () {
+    const [form] = Form.useForm()
+
+    // 自定义校验规则
+    const usernameValidator = (_, value) => {
+        if (/\s/.test(value)) {
+            return Promise.reject('用户名不能包含空格');
+        }
+        return Promise.resolve();
+    };
+    const passwordValidator = (_, value) => {
+        if (value && value.length < 6) {
+            return Promise.reject('密码至少需要6位');
+        }
+        return Promise.resolve();
+    };
+
+    useEffect(()=>{
+        // http.post('/login')
+        http({
+            method: 'post',
+            url: '/login',
+            data: {
+                username: 'xxx',
+                password: '123456'
+            }
+        })
+        
+        
+        .then(res=>{
+            console.log(res);
+        }).catch(err=>{
+            console.log('err', err);
+            
+        })
+    }, [])
+
+    const handleLogin = ()=>{
+        form.validateFields().then(res=>{
+            console.log(res);
+        }).catch(err=>{
+            console.log(err,7);
+            
+        })
+    }
+
+    const validateMessages = {
+        required: '${label} is required!',
+        types: {
+            username: '${label} is not a valid username!',
+            password: '${label} is not a valid password!',
+        },
+        // password: {
+        //     range: '${label} must be between ${min} and ${max}',
+        // },
+    };
+
     return <>
-        <h1>登录</h1>
-        <button onClick={()=>navigate('/home')}>跳往主页</button>
+        <div className="login-wrapper" style={{ backgroundImage: `url(${bg})` }}>
+            <div className="lgbg" style={{ backgroundImage: `url(${lgbg})` }}>
+                <div className="part">
+                    <div className="title">
+                        <div className="logo">
+                            <img src={logo}  />
+                        </div>
+                        <h1>朋远智慧园区管理平台</h1>
+                    </div>
+
+                    <Form
+                        name="basic"
+                        wrapperCol={{ span: 24 }}
+                        initialValues={{ remember: true }}
+                        autoComplete="off"
+                        form={form}
+                        validateMessages={validateMessages}
+                        validateTrigger={['onSubmit', 'onBlur']}
+                    >
+                        <Form.Item
+                            name="username"
+                            rules={[
+                                { required: true, message: '请输入用户名' },
+                                { validator: usernameValidator },// 新增自定义校验
+                            ]}
+                        >
+                            <Input placeholder="请输入用户名" prefix={<UserOutlined />} autoComplete="username" />
+                        </Form.Item>
+
+                        <Form.Item
+                            name="password"
+                            rules={[
+                                { required: true, message: '请输入密码' },
+                                { validator: passwordValidator },// 新增自定义校验
+                            ]}
+                        >
+                            <Input.Password placeholder="请输入密码" prefix={<LockOutlined />} autoComplete="current-password" />
+                        </Form.Item>
+
+                        <Form.Item wrapperCol={{ offset: 0, span: 24 }}>
+                            <Button type="primary" htmlType="submit" style={{ width: '100%' }} onClick={handleLogin}>
+                                登录
+                            </Button>
+                        </Form.Item>
+                    </Form>
+
+
+
+
+                </div>
+
+            </div>
+        </div>
     </>
 }
 
