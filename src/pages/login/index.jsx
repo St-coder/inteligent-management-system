@@ -4,9 +4,9 @@ import lgbg from "../../assets/lgbg.jpg"
 import './index.scss'
 import { Button, Form, Input } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
-
-import http from "../../utils/http";
+import { login } from "../../api/users";
 import { useEffect } from "react";
+import { message } from 'antd'
 
 const Login = function () {
     const [form] = Form.useForm()
@@ -25,45 +25,24 @@ const Login = function () {
         return Promise.resolve();
     };
 
-    useEffect(()=>{
-        // http.post('/login')
-        http({
-            method: 'post',
-            url: '/login',
-            data: {
-                username: 'xxx',
-                password: '123456'
-            }
-        })
-        
-        
-        .then(res=>{
-            console.log(res);
-        }).catch(err=>{
-            console.log('err', err);
-            
-        })
-    }, [])
 
-    const handleLogin = ()=>{
-        form.validateFields().then(res=>{
-            console.log(res);
-        }).catch(err=>{
-            console.log(err,7);
+    const handleLogin = () => {
+        form.validateFields().then(data => {
+            console.log(data, '表单值');
             
+            login(data)
+                .then(res => {
+                    console.log(res);
+                }).catch(err => {
+                    console.log('err', err);
+                })
+
+        }).catch(err => {
+            console.log(err, 7);
+
         })
     }
 
-    const validateMessages = {
-        required: '${label} is required!',
-        types: {
-            username: '${label} is not a valid username!',
-            password: '${label} is not a valid password!',
-        },
-        // password: {
-        //     range: '${label} must be between ${min} and ${max}',
-        // },
-    };
 
     return <>
         <div className="login-wrapper" style={{ backgroundImage: `url(${bg})` }}>
@@ -71,7 +50,7 @@ const Login = function () {
                 <div className="part">
                     <div className="title">
                         <div className="logo">
-                            <img src={logo}  />
+                            <img src={logo} />
                         </div>
                         <h1>朋远智慧园区管理平台</h1>
                     </div>
@@ -82,11 +61,10 @@ const Login = function () {
                         initialValues={{ remember: true }}
                         autoComplete="off"
                         form={form}
-                        validateMessages={validateMessages}
                         validateTrigger={['onSubmit', 'onBlur']}
                     >
                         <Form.Item
-                            name="username"
+                            name="userName"
                             rules={[
                                 { required: true, message: '请输入用户名' },
                                 { validator: usernameValidator },// 新增自定义校验
