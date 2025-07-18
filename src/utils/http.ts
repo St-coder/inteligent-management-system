@@ -1,11 +1,16 @@
 import axios, { AxiosInstance } from "axios";
 import { message } from 'antd'
+import { store } from "../store";
 const http:AxiosInstance = axios.create({
     baseURL: process.env.REACT_APP_API_URL,
     timeout: 5000,
 })
 
 http.interceptors.request.use((config) => {
+    const {token} = store.getState().authReducer;
+    if(token){
+        config.headers['Authorization'] = `Bearer ${token}`;
+    }
     return config
 })
 

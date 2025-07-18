@@ -5,20 +5,25 @@ import './index.scss'
 import { Button, Form, Input } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import { login } from "../../api/users";
-import { useEffect } from "react";
-import { message } from 'antd'
+import { useDispatch } from "react-redux";
+import { setToken, clearToken } from "../../store/authSlice";
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 const Login = function () {
     const [form] = Form.useForm()
+    const dispatch =  useDispatch()
+    const navigate = useNavigate()
 
+    const [loading, setLoading] = useState<boolean>(false)
     // 自定义校验规则
-    const usernameValidator = (_, value) => {
+    const usernameValidator = (_: any, value: string) => {
         if (/\s/.test(value)) {
             return Promise.reject('用户名不能包含空格');
         }
         return Promise.resolve();
     };
-    const passwordValidator = (_, value) => {
+    const passwordValidator = (_: any, value: string) => {
         if (value && value.length < 6) {
             return Promise.reject('密码至少需要6位');
         }
@@ -29,17 +34,21 @@ const Login = function () {
     const handleLogin = () => {
         form.validateFields().then(data => {
             console.log(data, '表单值');
-            
+            setLoading(true)
             login(data)
                 .then(res => {
                     console.log(res);
+                    dispatch(setToken(res.data.token))
+                    setLoading(false)
+
+                    navigate('/', {replace: true})
                 }).catch(err => {
+                    setLoading(false)
                     console.log('err', err);
                 })
 
         }).catch(err => {
             console.log(err, 7);
-
         })
     }
 
@@ -84,7 +93,7 @@ const Login = function () {
                         </Form.Item>
 
                         <Form.Item wrapperCol={{ offset: 0, span: 24 }}>
-                            <Button type="primary" htmlType="submit" style={{ width: '100%' }} onClick={handleLogin}>
+                            <Button type="primary" htmlType="submit" style={{ width: '100%' }} loading={loading} onClick={handleLogin}>
                                 登录
                             </Button>
                         </Form.Item>
