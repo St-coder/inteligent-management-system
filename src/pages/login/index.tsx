@@ -6,7 +6,7 @@ import { Button, Form, Input } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import { login } from "../../api/users";
 import { useDispatch } from "react-redux";
-import { setToken, clearToken } from "../../store/authSlice";
+import { setToken, setUserInfo } from "../../store/authSlice";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 
@@ -39,6 +39,7 @@ const Login = function () {
                 .then(res => {
                     console.log(res);
                     dispatch(setToken(res.data.token))
+                    dispatch(setUserInfo(res.data))
                     setLoading(false)
 
                     navigate('/', {replace: true})
