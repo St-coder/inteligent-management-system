@@ -1,5 +1,6 @@
 import { Dropdown, Space } from 'antd';
 import type { MenuProps } from 'antd';
+import { useMemo } from 'react';
 import {
   UserOutlined,
   LogoutOutlined,
@@ -34,6 +35,9 @@ function MyHeader(){
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const userInfo = useSelector((state: any) => state.authReducer.userInfo)
+    const welcomeText = useMemo(()=>{
+        return `欢迎您，${userInfo.userName}`
+    }, [userInfo?.userName])
 
     console.log(userInfo, 66)
     const onClick: MenuProps['onClick'] = ({key}) => {
@@ -48,7 +52,7 @@ function MyHeader(){
         <Dropdown menu={{ items, onClick }} trigger={['click']} arrow>
             <a onClick={e => e.preventDefault()}>
             <Space>
-                欢迎您，{userInfo.userName}
+                { welcomeText }
                 <DownOutlined />
             </Space>
             </a>
