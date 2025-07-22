@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
 import React, { useState } from 'react';
 import { Breadcrumb, Layout, theme } from 'antd';
 import type { MenuProps } from 'antd';
@@ -26,9 +26,8 @@ function Home() {
         </Header>
         <Content style={{ margin: '0 16px' }}>
           <MyBreadCrumb />
-          <div className="site-layout-background" style={{ padding: 24, minHeight: 360 }}>
-            Bill is a cat.
-          </div>
+          <Outlet />
+          
         </Content>
         <Footer style={{ textAlign: 'center' }}>Ant Design ©2018 Created by Ant UED</Footer>
       </Layout>

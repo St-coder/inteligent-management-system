@@ -39,7 +39,7 @@ function MyHeader(){
         return `欢迎您，${userInfo.userName}`
     }, [userInfo?.userName])
 
-    console.log(userInfo, 66)
+    
     const onClick: MenuProps['onClick'] = ({key}) => {
         if(key === '/logout'){
             dispatch(clearToken())

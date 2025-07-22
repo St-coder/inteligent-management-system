@@ -5,6 +5,9 @@ import icons from './iconList';
 import type { MenuProps } from 'antd';
 import "./index.scss"
 import logo from "../../assets/logo.png"
+import { setMuneList } from '../../store/authSlice';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 type MenuItem = Required<MenuProps>['items'][number];
 
@@ -21,9 +24,12 @@ interface itemFace {
 function NavLeft({collapsed,}: Iprops){
 
     const [menu, setMenus]=useState<MenuItem[]>([])
-
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
     async  function configMenu(){
         const {data} = await getMenuList()
+        dispatch(setMuneList(data))
+
         const mappedMenuItems = handleMenu(data)
         setMenus(mappedMenuItems)
     }
@@ -40,8 +46,8 @@ function NavLeft({collapsed,}: Iprops){
         })
     }
 
-    function selectMenu(data:any){
-        console.log(data, 'key')
+    function selectMenu({key}:{key:string}){
+        navigate(key)
     }
 
     useEffect(()=>{
