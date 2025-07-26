@@ -4,23 +4,31 @@ import { useSelector } from 'react-redux';
 import { generateRoutes } from "./utils/generatesRoutes"
 import { useEffect, useState, Suspense } from 'react';
 import { baseRouters }  from './router'
+import { setMuneList } from './store/authSlice';
+import { useDispatch } from 'react-redux';
+import { getMenuList } from './api/users';
 
 function App() {
-  const { menuList} = useSelector((state:any)=> state.authReducer);
+  const { token} = useSelector((state:any)=> state.authReducer);
+  const dispatch = useDispatch()
   const [routers, setRouters] = useState<any>(null)
   useEffect(()=>{
-    console.log(menuList, 'menuList')
-    const dynamicRoutes = generateRoutes(menuList)
-    
-    const mergedRoutes  = [...baseRouters];
-    mergedRoutes[0].children=dynamicRoutes;
-    if (dynamicRoutes.length) {
-      mergedRoutes[0].children[0].index=true
-    }
-    const routers = createBrowserRouter(mergedRoutes)    
-    setRouters(routers)       
+    async function loadData(){
+      const {data} = await getMenuList()
+      dispatch(setMuneList(data))
+      
+      const dynamicRoutes = generateRoutes(data)
+      const mergedRoutes  = [...baseRouters];
+      mergedRoutes[0].children=dynamicRoutes;
+      if (dynamicRoutes.length) {
+        mergedRoutes[0].children[0].index=true
+      }
+      const routers = createBrowserRouter(mergedRoutes)    
+      setRouters(routers)
 
-  }, [menuList])
+    }
+    loadData()
+  }, [token])
 
 
   if(!routers){

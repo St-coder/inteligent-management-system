@@ -1,14 +1,11 @@
 import { Menu, theme } from 'antd';
-import { getMenuList } from '../../api/users';
 import { useEffect, useState } from 'react';
 import icons from './iconList';
 import type { MenuProps } from 'antd';
 import "./index.scss"
 import logo from "../../assets/logo.png"
-import { setMuneList } from '../../store/authSlice';
-import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-
+import { useSelector } from 'react-redux';
 type MenuItem = Required<MenuProps>['items'][number];
 
 interface Iprops{
@@ -22,15 +19,11 @@ interface itemFace {
     children?: itemFace[],
 }
 function NavLeft({collapsed,}: Iprops){
-
     const [menu, setMenus]=useState<MenuItem[]>([])
-    const dispatch = useDispatch()
+    const menuList = useSelector((state:any)=> state.authReducer.menuList);
     const navigate = useNavigate()
     async  function configMenu(){
-        const {data} = await getMenuList()
-        dispatch(setMuneList(data))
-
-        const mappedMenuItems = handleMenu(data)
+        const mappedMenuItems = handleMenu(menuList)
         setMenus(mappedMenuItems)
     }
 
