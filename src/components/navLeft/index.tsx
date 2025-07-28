@@ -4,7 +4,7 @@ import icons from './iconList';
 import type { MenuProps } from 'antd';
 import "./index.scss"
 import logo from "../../assets/logo.png"
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 type MenuItem = Required<MenuProps>['items'][number];
 
@@ -21,6 +21,7 @@ interface itemFace {
 function NavLeft({collapsed,}: Iprops){
     const [menu, setMenus]=useState<MenuItem[]>([])
     const {menuList} = useSelector((state:any)=> state.authReducer);
+    const location=useLocation();
     const navigate = useNavigate()
     async  function configMenu(){
         const mappedMenuItems = handleMenu(menuList)
@@ -53,7 +54,7 @@ function NavLeft({collapsed,}: Iprops){
             <h1>朋远智慧园区</h1>
         </div>
         <Menu
-            defaultSelectedKeys={['/dashboard']}
+            selectedKeys={[location.pathname]}
             mode="inline"
             theme="dark"
             inlineCollapsed={collapsed}

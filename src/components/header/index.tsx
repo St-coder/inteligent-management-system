@@ -13,7 +13,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 const items: MenuProps['items'] = [
   {
-    key: 'personalCenter',
+    key: '/personal',
     label: (
       <a target="_blank">个人中心</a>
     ),
