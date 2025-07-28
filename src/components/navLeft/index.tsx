@@ -20,7 +20,7 @@ interface itemFace {
 }
 function NavLeft({collapsed,}: Iprops){
     const [menu, setMenus]=useState<MenuItem[]>([])
-    const menuList = useSelector((state:any)=> state.authReducer.menuList);
+    const {menuList} = useSelector((state:any)=> state.authReducer);
     const navigate = useNavigate()
     async  function configMenu(){
         const mappedMenuItems = handleMenu(menuList)
@@ -45,7 +45,7 @@ function NavLeft({collapsed,}: Iprops){
 
     useEffect(()=>{
         configMenu()
-    }, [])
+    }, [menuList])
 
     return <div className='navleft'>
         <div className='logo'>

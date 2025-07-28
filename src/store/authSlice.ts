@@ -27,9 +27,12 @@ export const authSlice = createSlice({
         setMuneList(state, action){
             state.menuList=action.payload;
         },
+        clearMuneList(state){
+            state.menuList=[];
+        },
     }
 })
 
-export const { setToken, clearToken, setUserInfo, clearUserInfo, setMuneList } = authSlice.actions;
+export const { setToken, clearToken, setUserInfo, clearUserInfo, setMuneList, clearMuneList } = authSlice.actions;
 
 export default authSlice.reducer;

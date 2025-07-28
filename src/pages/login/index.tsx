@@ -42,7 +42,7 @@ const Login = function () {
                     dispatch(setUserInfo(res.data))
                     setLoading(false)
 
-                    navigate('/', {replace: true})
+                    navigate('/dashboard', {replace: true})
                 }).catch(err => {
                     setLoading(false)
                     console.log('err', err);

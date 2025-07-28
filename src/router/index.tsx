@@ -7,24 +7,24 @@ import { RouteObject } from 'react-router-dom'
 const Home = React.lazy(() => import('../pages/home'))
 const Login = React.lazy(() => import('../pages/login'))
 const NotFound = React.lazy(() => import('../pages/404'))
-const router = createBrowserRouter([
-    {
-        path: '/',
-        element: <RequireAuth allowed={true} redirectUrl="/login"><Home /></RequireAuth>
-    },
-    {
-        path: '/home',
-        element: <RequireAuth allowed={true} redirectUrl="/login"><Home /></RequireAuth>
-    },
-    {
-        path: '/login',
-        element: <RequireAuth allowed={false} redirectUrl="/home"><Login /></RequireAuth>
-    },
-    {
-        path: '*',
-        element: <NotFound />
-    },
-])
+// const router = createBrowserRouter([
+//     {
+//         path: '/',
+//         element: <RequireAuth allowed={true} redirectUrl="/login"><Home /></RequireAuth>
+//     },
+//     {
+//         path: '/dashboard',
+//         element: <RequireAuth allowed={true} redirectUrl="/login"><Home /></RequireAuth>
+//     },
+//     {
+//         path: '/login',
+//         element: <RequireAuth allowed={false} redirectUrl="/dashboard"><Login /></RequireAuth>
+//     },
+//     {
+//         path: '*',
+//         element: <NotFound />
+//     },
+// ])
 
 export const baseRouters:RouteObject[] = [
 
@@ -33,16 +33,16 @@ export const baseRouters:RouteObject[] = [
         element: <RequireAuth allowed={true} redirectUrl="/login"><Home /></RequireAuth>
     },
     {
-        path: '/home',
+        path: '/dashboard',
         element: <RequireAuth allowed={true} redirectUrl="/login"><Home /></RequireAuth>
     },
     {
         path: '/login',
-        element: <RequireAuth allowed={false} redirectUrl="/home"><Login /></RequireAuth>
+        element: <RequireAuth allowed={false} redirectUrl="/dashboard"><Login /></RequireAuth>
     },
     {
         path: '*',
         element: <NotFound />
     },
 ]
-export default router;
+// export default router;

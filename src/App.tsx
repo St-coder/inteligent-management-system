@@ -14,9 +14,12 @@ function App() {
   const [routers, setRouters] = useState<any>(null)
   useEffect(()=>{
     async function loadData(){
-      const {data} = await getMenuList()
-      dispatch(setMuneList(data))
-      
+      let data:any = []
+      if(token){
+        let res = await getMenuList()
+        data = res.data;
+        dispatch(setMuneList(data))
+      }
       const dynamicRoutes = generateRoutes(data)
       const mergedRoutes  = [...baseRouters];
       mergedRoutes[0].children=dynamicRoutes;
@@ -27,7 +30,8 @@ function App() {
       setRouters(routers)
 
     }
-    loadData()
+
+      loadData()
   }, [token])
 
 

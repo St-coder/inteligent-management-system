@@ -7,7 +7,7 @@ import {
   DownOutlined,
 } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
-import { clearToken, clearUserInfo } from '../../store/authSlice';
+import { clearToken, clearUserInfo, clearMuneList } from '../../store/authSlice';
 import { useDispatch, useSelector } from 'react-redux';
 
 
@@ -44,6 +44,7 @@ function MyHeader(){
         if(key === '/logout'){
             dispatch(clearToken())
             dispatch(clearUserInfo())
+            dispatch(clearMuneList())
         }else{
             navigate(key)
         }
