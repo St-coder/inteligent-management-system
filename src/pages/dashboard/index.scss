@@ -1,16 +1,40 @@
-.dashboard{
+.dashboard {
     .Card-wrap {
         display: flex;
         align-items: center;
         justify-content: space-between;
 
-        .area{
-            p{color: #666;line-height: 30px;}
+        .area {
+            p {
+                color: #666;
+                line-height: 30px;
+            }
         }
-        .icon{font-size: 60px;color: #7da1f7;margin-right: 20px;}
+
+        .icon {
+            font-size: 60px;
+            color: #7da1f7;
+            margin-right: 20px;
+        }
+    }
+
+    .wrap {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 300px;
+        .ant-statistic {
+            margin-top: 20px;
+        }
     }
 
     .charts-wrapper {
-            margin-top: 1rem;
+        margin-top: 1rem;
+    }
+
+    .timeline-wrap {
+        height: 300px;
+        overflow-y: auto;
     }
 }

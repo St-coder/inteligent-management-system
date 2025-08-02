@@ -3,6 +3,8 @@ import { RadarChartOutlined, SnippetsOutlined, DollarOutlined, LaptopOutlined } 
 import ReactECharts from "echarts-for-react"
 import { getEnergyData } from "@/api/dashboard"
 import Company from "./components/Company"
+// import ChargeTime from "./components/ChargeTime"
+import LeaseCharge from "./components/LeaseCharge"
 import "./index.scss"
 import { useEffect, useState } from 'react';
 
@@ -36,6 +38,12 @@ function DashBoard() {
 
     const [data, setData] = useState(initalOption);
     const [showLoading, setLoading] = useState(false);
+    const [cardList, setCardList] = useState([
+        {color:'green', title:'进场', time: '08:24', car: '京A66666'},
+        {color:'red', title:'出场', time: '08:24', car: '京A66666'},
+        {color:'green', title:'进场', time: '08:24', car: '京A66666'},
+        {color:'red', title:'出场', time: '08:24', car: '京A66666'},
+    ]);
 
     useEffect(() => {
 
@@ -131,6 +139,44 @@ function DashBoard() {
                     <Company />
                 </Card>
             </Col>
+        </Row>
+
+        <Row gutter={16} className="charts-wrapper">
+            <Col span={12}>
+                <Card title="租赁情况">
+                    <LeaseCharge />
+                </Card>
+            </Col>
+            <Col span={6}>
+                <Card title="充电空闲统计">
+                    <div className="wrap">
+                        <Progress type="circle" percent={75} />
+                        <Statistic title="总充电桩数" value={75} suffix="/ 100" className="mt"/>
+                    </div>
+                </Card>
+            </Col>
+            <Col span={6}>
+                <Card title="实时车辆信息">
+                    <div className="timeline-wrap">
+                        {/* <Timeline  items={[
+                                {
+                                    children: <><Tag color="green">进场</Tag>08:24车辆 京A66666</>
+                                },
+                            ]}/> */}
+
+                            <Timeline>
+                                { cardList.map((it, index)=>(
+                                    <Timeline.Item  key={index} color={it.color}>
+                                        {it.title}
+                                        {it.time}
+                                        {it.car}
+                                    </Timeline.Item>
+                                ))}
+                            </Timeline>
+                    </div>
+                </Card>
+            </Col>
+
         </Row>
 
     </div>
