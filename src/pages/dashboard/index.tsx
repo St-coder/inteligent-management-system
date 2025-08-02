@@ -1,4 +1,4 @@
-import { Row, Col, Card, Progress, Statistic, Timeline, } from "antd"
+import { Row, Col, Card, Progress, Statistic, Timeline, Tag } from "antd"
 import { RadarChartOutlined, SnippetsOutlined, DollarOutlined, LaptopOutlined } from "@ant-design/icons"
 import ReactECharts from "echarts-for-react"
 import { getEnergyData } from "@/api/dashboard"
@@ -38,10 +38,10 @@ function DashBoard() {
     const [data, setData] = useState(initalOption);
     const [showLoading, setLoading] = useState(false);
     const [cardList,] = useState([
-        {color:'green', title:'进场', time: '08:24', car: '京A66666'},
-        {color:'red', title:'出场', time: '08:24', car: '京A66666'},
-        {color:'green', title:'进场', time: '08:24', car: '京A66666'},
-        {color:'red', title:'出场', time: '08:24', car: '京A66666'},
+       { children: <><Tag color="green">进场</Tag>08:24车辆 京A66666</>, color: 'green', },
+        { children: <><Tag color="red">出场</Tag>08:24车辆 京A66666</>, color: 'red', },
+        { children: <><Tag color="green">进场</Tag>08:24车辆 京A66666</>, color: 'green', },
+        { children: <><Tag color="red">出场</Tag>08:24车辆 京A66666</>, color: 'red', },
     ]);
 
     useEffect(() => {
@@ -70,7 +70,7 @@ function DashBoard() {
          // eslint-disable-next-line
     }, []);
 
-    return <div className="dashboard">
+    return <div className="dashboard pt-4">
         <Row gutter={16}>
             <Col span={6}>
                 <Card>
@@ -158,21 +158,7 @@ function DashBoard() {
             <Col span={6}>
                 <Card title="实时车辆信息">
                     <div className="timeline-wrap">
-                        {/* <Timeline  items={[
-                                {
-                                    children: <><Tag color="green">进场</Tag>08:24车辆 京A66666</>
-                                },
-                            ]}/> */}
-
-                            <Timeline>
-                                { cardList.map((it, index)=>(
-                                    <Timeline.Item  key={index} color={it.color}>
-                                        {it.title}
-                                        {it.time}
-                                        {it.car}
-                                    </Timeline.Item>
-                                ))}
-                            </Timeline>
+                        <Timeline  items={ cardList }/>
                     </div>
                 </Card>
             </Col>
