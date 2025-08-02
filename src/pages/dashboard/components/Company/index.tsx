@@ -51,7 +51,8 @@ const Company = () => {
             setLoading(false);
         }
         loadCompanyData()
-    }, [options])
+         // eslint-disable-next-line
+    }, [])
     return (
         <ReactECharts option={options} showLoading={showLoading} />
     )

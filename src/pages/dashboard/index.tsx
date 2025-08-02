@@ -67,7 +67,8 @@ function DashBoard() {
 
         }
         loadData()
-    }, [data]);
+         // eslint-disable-next-line
+    }, []);
 
     return <div className="dashboard">
         <Row gutter={16}>
