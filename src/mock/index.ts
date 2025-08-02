@@ -416,3 +416,41 @@ Mock.mock('https://www.demo.com/menu', 'get', (options:any)=>{
     
 
 })
+
+//dashboard里 图表接口
+Mock.mock('https://www.demo.com/energyData',"get",()=>{
+    return {
+        code:200,
+        message:"请求成功",
+        data:[
+            {name:"煤",data:[120, 132, 101, 134, 90, 230, 210]},
+            {name:"气",data:[220, 182, 191, 234, 290, 330, 310]},
+            {name:"油",data: [150, 232, 201, 154, 190, 330, 410]},
+            {name:"电",data:[320, 332, 301, 334, 390, 330, 320]},
+            {name:"热",data:[820, 932, 901, 934, 1290, 1330, 1320]}
+        ]
+    }
+})
+Mock.mock('https://www.demo.com/getCompanyData',"get",()=>{
+    return {
+        code:200,
+        message:"请求成功",
+        data: {
+            years: ["2014", "2016", "2018", "2020", "2022", "2024"],
+            series: [
+                {
+                    name: "科技企业",
+                    data: [40, 220, 378, 658, 1122, 1200]
+                },
+                {
+                    name: "高新企业",
+                    data: [20, 39, 443, 490, 559, 762]
+                },
+                {
+                    name: "国营企业",
+                    data: [78, 167, 229, 330, 380, 420]
+                }
+            ]
+        }
+    }
+})

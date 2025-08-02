@@ -1,8 +1,67 @@
 import { Row, Col, Card, Progress, Statistic, Timeline, Tag } from "antd"
 import { RadarChartOutlined, SnippetsOutlined, DollarOutlined, LaptopOutlined } from "@ant-design/icons"
+import ReactECharts from "echarts-for-react"
+import { getEnergyData } from "@/api/dashboard"
+import Company from "./components/Company"
 import "./index.scss"
+import { useEffect, useState } from 'react';
 
 function DashBoard() {
+    const initalOption = {
+        title: {
+            text: '当日能源消耗'
+        },
+        tooltip: {
+            trigger: 'axis'
+        },
+        legend: {
+            data: []
+        },
+        grid: {
+            left: '%',
+            right: '4%',
+            bottom: '3%',
+            containLabel: true
+        },
+        xAxis: {
+            type: 'category',
+            boundaryGap: false,
+            data: ['0：00', '4：00', '8：00', '12：00', '16：00', '20：00', '24：00']
+        },
+        yAxis: {
+            type: 'value'
+        },
+        series: []
+    };
+
+    const [data, setData] = useState(initalOption);
+    const [showLoading, setLoading] = useState(false);
+
+    useEffect(() => {
+
+        const loadData = async () => {
+            setLoading(true);
+            const { data: apiData } = await getEnergyData();
+            const dataList = apiData.map((item: any) => ({
+                name: item.name,
+                data: item.data,
+                type: "line",
+                stack: "Total"
+            }));
+            const updataOption = {
+                ...data,
+                legend: {
+                    data: dataList.map((item: any) => item.name),
+                },
+                series: dataList
+            }
+            setData(updataOption)
+            setLoading(false);
+
+        }
+        loadData()
+    }, []);
+
     return <div className="dashboard">
         <Row gutter={16}>
             <Col span={6}>
@@ -60,6 +119,20 @@ function DashBoard() {
                 </Card>
             </Col>
         </Row>
+
+        <Row gutter={16} className="charts-wrapper">
+            <Col span={12}>
+                <Card title="能源消耗情况">
+                    <ReactECharts option={data} showLoading={showLoading} />
+                </Card>
+            </Col>
+            <Col span={12}>
+                <Card title="企业资质情况">
+                    <Company />
+                </Card>
+            </Col>
+        </Row>
+
     </div>
 }
 export default DashBoard;
