@@ -1,7 +1,6 @@
-import { Link, Outlet } from "react-router-dom";
-import React, { useState } from 'react';
-import { Breadcrumb, Layout, theme } from 'antd';
-import type { MenuProps } from 'antd';
+import { Outlet } from "react-router-dom";
+import { useState } from 'react';
+import { Layout, theme } from 'antd';
 import NavLeft from "../../components/navLeft";
 import MyBreadCrumb from "../../components/breadCrumb";
 import MyHeader from "../../components/header";

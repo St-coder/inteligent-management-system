@@ -32,7 +32,7 @@ function App() {
     }
 
       loadData()
-  }, [token])
+  }, [token, dispatch])
 
 
   if(!routers){

@@ -1,9 +1,8 @@
-import { Row, Col, Card, Progress, Statistic, Timeline, Tag } from "antd"
+import { Row, Col, Card, Progress, Statistic, Timeline, } from "antd"
 import { RadarChartOutlined, SnippetsOutlined, DollarOutlined, LaptopOutlined } from "@ant-design/icons"
 import ReactECharts from "echarts-for-react"
 import { getEnergyData } from "@/api/dashboard"
 import Company from "./components/Company"
-// import ChargeTime from "./components/ChargeTime"
 import LeaseCharge from "./components/LeaseCharge"
 import "./index.scss"
 import { useEffect, useState } from 'react';
@@ -38,7 +37,7 @@ function DashBoard() {
 
     const [data, setData] = useState(initalOption);
     const [showLoading, setLoading] = useState(false);
-    const [cardList, setCardList] = useState([
+    const [cardList,] = useState([
         {color:'green', title:'进场', time: '08:24', car: '京A66666'},
         {color:'red', title:'出场', time: '08:24', car: '京A66666'},
         {color:'green', title:'进场', time: '08:24', car: '京A66666'},
@@ -68,7 +67,7 @@ function DashBoard() {
 
         }
         loadData()
-    }, []);
+    }, [data]);
 
     return <div className="dashboard">
         <Row gutter={16}>

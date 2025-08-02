@@ -3,14 +3,14 @@ Mock.setup({
     timeout: "200-600"
 })
 Mock.mock('https://www.demo.com/login', "post", (options: any)=>{
-    const { userName, password } = JSON.parse(options.body)
+    const { userName, } = JSON.parse(options.body)
     const arr = [
         {userName:'admin', token: 'adminxxx'},
         {userName:'manager', token: 'managerxxx'},
         {userName:'user', token: 'userxxx'},
     ]
 
-    let obj = arr.find(it => it.userName==userName)    
+    let obj = arr.find(it => it.userName===userName)    
     if(!obj) {
         return {
             code: 400,
@@ -158,75 +158,75 @@ const menuList = [
     }
 ]
 
-const userMenuList = [
-    {
-        "icon": "DashboardOutlined",
-        "label": "工作台",
-        "key": "/dashboard",
-    },
-    {
+// const userMenuList = [
+//     {
+//         "icon": "DashboardOutlined",
+//         "label": "工作台",
+//         "key": "/dashboard",
+//     },
+//     {
 
-        "icon": "TeamOutlined",
-        "label": "租户管理",
-        "key": "/users",
-        "children": [
-            {
-                "icon": "UnorderedListOutlined",
-                "label": "租户列表",
-                "key": "/users/list",
-            },
-            {
-                "icon": "UserAddOutlined",
-                "label": "新增租户",
-                "key": "/users/add",
-            }
-        ]
-    },
-    {
-        "icon": "LaptopOutlined",
-        "label": "物业管理",
-        "key": "/estate",
-        "children": [
-            {
+//         "icon": "TeamOutlined",
+//         "label": "租户管理",
+//         "key": "/users",
+//         "children": [
+//             {
+//                 "icon": "UnorderedListOutlined",
+//                 "label": "租户列表",
+//                 "key": "/users/list",
+//             },
+//             {
+//                 "icon": "UserAddOutlined",
+//                 "label": "新增租户",
+//                 "key": "/users/add",
+//             }
+//         ]
+//     },
+//     {
+//         "icon": "LaptopOutlined",
+//         "label": "物业管理",
+//         "key": "/estate",
+//         "children": [
+//             {
 
-                "icon": "InsertRowLeftOutlined",
-                "label": "楼宇管理",
-                "key": "/estate/tenement",
+//                 "icon": "InsertRowLeftOutlined",
+//                 "label": "楼宇管理",
+//                 "key": "/estate/tenement",
 
-            },
-            {
-                "icon": "BankOutlined",
-                "label": "房间管理",
-                "key": "/estate/room",
-            },
-            {
-                "icon": "TruckOutlined",
-                "label": "车辆信息",
-                "key": "/estate/car",
-            }
-        ]
-    },
-    {
-        "icon": "ToolOutlined",
-        "label": "报修管理",
-        "key": "/repair"
-    },
-    {
-        "icon": "ToolOutlined",
-        "label": "设备管理",
-        "key": "/equipment",
-    },
-    {
-        "icon": "ThunderboltOutlined",
-        "label": "能源消耗",
-        "key": "/energy",
-    },
-    {
-        "icon": "UserOutlined",
-        "label": "个人中心",
-        "key": "/personal",
-    }
-]
+//             },
+//             {
+//                 "icon": "BankOutlined",
+//                 "label": "房间管理",
+//                 "key": "/estate/room",
+//             },
+//             {
+//                 "icon": "TruckOutlined",
+//                 "label": "车辆信息",
+//                 "key": "/estate/car",
+//             }
+//         ]
+//     },
+//     {
+//         "icon": "ToolOutlined",
+//         "label": "报修管理",
+//         "key": "/repair"
+//     },
+//     {
+//         "icon": "ToolOutlined",
+//         "label": "设备管理",
+//         "key": "/equipment",
+//     },
+//     {
+//         "icon": "ThunderboltOutlined",
+//         "label": "能源消耗",
+//         "key": "/energy",
+//     },
+//     {
+//         "icon": "UserOutlined",
+//         "label": "个人中心",
+//         "key": "/personal",
+//     }
+// ]
 
 const managerMenuList = [
     {
@@ -388,19 +388,19 @@ const customizeMenuList = [
 
 Mock.mock('https://www.demo.com/menu', 'get', (options:any)=>{
     const token = sessionStorage.getItem("token");
-    if (token == "adminxxx"){
+    if (token === "adminxxx"){
         return {
             code: 200,
             message: '请求成功',
             data: menuList
         }
-    }else if(token == "managerxxx"){
+    }else if(token === "managerxxx"){
         return {
             code: 200,
             message: '请求成功',
             data: managerMenuList
         }
-    }else if(token == "userxxx"){
+    }else if(token === "userxxx"){
         return {
             code: 200,
             message: '请求成功',

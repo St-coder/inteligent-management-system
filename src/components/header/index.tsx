@@ -15,14 +15,14 @@ const items: MenuProps['items'] = [
   {
     key: '/personal',
     label: (
-      <a target="_blank">个人中心</a>
+      <span>个人中心</span>
     ),
     icon: <UserOutlined />,
   },
   {
     key: '/logout',
     label: (
-      <a target="_blank">退出登录</a>
+      <span>退出登录</span>
     ),
     icon: <LogoutOutlined />,
   },
@@ -51,12 +51,12 @@ function MyHeader(){
     };
     return <div>
         <Dropdown menu={{ items, onClick }} trigger={['click']} arrow>
-            <a onClick={e => e.preventDefault()}>
+            <div onClick={e => e.preventDefault()}>
             <Space>
                 { welcomeText }
                 <DownOutlined />
             </Space>
-            </a>
+            </div>
         </Dropdown>
     </div>
 }

@@ -1,4 +1,3 @@
-import { all } from "axios";
 import { ReactNode, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -20,10 +19,10 @@ function RequireAuth({allowed,redirectUrl, children}:Iprops){
             navigate(redirectUrl)
             return
         }
-    }, [isLogin, allowed, redirectUrl,])
+    }, [isLogin, allowed, redirectUrl, navigate])
     
 
-    return isLogin==allowed?<>{children}</>:<></>;
+    return isLogin===allowed?<>{children}</>:<></>;
 
 }
 

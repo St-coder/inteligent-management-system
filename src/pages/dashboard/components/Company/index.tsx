@@ -51,7 +51,7 @@ const Company = () => {
             setLoading(false);
         }
         loadCompanyData()
-    }, [])
+    }, [options])
     return (
         <ReactECharts option={options} showLoading={showLoading} />
     )

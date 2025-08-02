@@ -1,6 +1,5 @@
 import { Breadcrumb } from 'antd';
 import { useSelector } from 'react-redux';
-import type { BreadcrumbProps } from 'antd';
 
 import { useLocation } from  'react-router-dom'
 interface MenuItem{

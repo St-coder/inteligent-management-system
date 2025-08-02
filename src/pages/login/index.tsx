@@ -60,7 +60,7 @@ const Login = function () {
                 <div className="part">
                     <div className="title">
                         <div className="logo">
-                            <img src={logo} />
+                            <img src={logo} alt="logo" />
                         </div>
                         <h1>朋远智慧园区管理平台</h1>
                     </div>

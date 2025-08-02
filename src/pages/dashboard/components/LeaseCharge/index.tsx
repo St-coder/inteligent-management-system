@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import ReactECharts from "echarts-for-react"
 
 const option = {
@@ -27,8 +27,8 @@ const option = {
     ]
 };
 const LeaseCharge = () => {
-    const [options, setOption] = useState(option);
-    const [showLoading, setLoading] = useState(false);
+    const [options,] = useState(option);
+    const [showLoading,] = useState(false);
     return (
         <ReactECharts option={options} showLoading={showLoading} />
     )

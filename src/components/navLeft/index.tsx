@@ -1,4 +1,4 @@
-import { Menu, theme } from 'antd';
+import { Menu } from 'antd';
 import { useEffect, useState } from 'react';
 import icons from './iconList';
 import type { MenuProps } from 'antd';
@@ -46,6 +46,7 @@ function NavLeft({collapsed,}: Iprops){
 
     useEffect(()=>{
         configMenu()
+         // eslint-disable-next-line
     }, [menuList])
 
     return <div className='navleft'>
