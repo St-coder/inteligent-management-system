@@ -1,5 +1,5 @@
 export interface DataType{
-    id:string | number;
+    id:string;
     name:string;
     status:string;
     tel:number;
@@ -12,8 +12,8 @@ export interface DataType{
 }
 
 export interface SearchType{
-    page:number;
-    pageSize:number;
+    page?:number;
+    pageSize?:number;
     companyName?:string;
     contact?:string;
     tel?:string;

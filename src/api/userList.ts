@@ -16,5 +16,4 @@ export function batchDeleteUser(ids:React.Key[]){
 //编辑/新增 企业接口
 export function editUser(data:DataType){
     return post("/editUser",data)
-
 }

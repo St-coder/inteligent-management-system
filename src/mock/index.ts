@@ -466,7 +466,7 @@ Mock.Random.extend({
 
 //租户列表的接口
 Mock.mock("https://www.demo.com/userList","post",(options:any)=>{
-    const {pageSize,page,companyName,contact,phone}=JSON.parse(options.body)
+    const {pageSize,page,companyName,contact,tel}=JSON.parse(options.body)
     return {
         code:200,
         message:"成功",
@@ -488,4 +488,27 @@ Mock.mock("https://www.demo.com/userList","post",(options:any)=>{
             total:78
         })
     }
+})
+
+
+//删除企业
+Mock.mock('https://www.demo.com/deleteUser','post',(options:any)=>{
+  const {id}=JSON.parse(options.body);
+  console.log("删除企业",id);
+  return {
+    code: 200,
+    message: "成功",
+    data:"操作成功"
+  }
+})
+
+//批量删除企业
+Mock.mock('https://www.demo.com/batchDeleteUser','post',(options:any)=>{
+  const {ids}=JSON.parse(options.body);
+  console.log("ids",ids)
+  return {
+    code: 200,
+    message: "成功",
+    data:"操作成功"
+  }
 })

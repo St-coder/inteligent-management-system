@@ -1,18 +1,21 @@
-import { useEffect, useState } from 'react';
-import { Card, Row, Col,Input,Button,Table,Pagination,Popconfirm } from 'antd';
+import { useEffect, useMemo, useState } from 'react';
+import { Card, Row, Col,Input,Button,Table,Pagination,Popconfirm, Tag, message } from 'antd';
 import type { TableProps } from 'antd';
 import type { DataType, SearchType } from './interface';
-import{ getUserList } from '@/api/userList'
+import{ getUserList, deleteUser, batchDeleteUser } from '@/api/userList'
 
 function Users(){
-    const [disabled, setDisabled] = useState(false);
     function add(){}
-    function batchDelete(){}
+    async function batchDelete(){
+        const {data} = await batchDeleteUser(selectedRowKeys)
+        message.success(data || '删除成功')
+        setSelectedRowKeys([])
+        loadData()
+    }
     function onChange(page: number, pageSize: number, ) {
         setPage(page);
         setPageSize(pageSize);
     }
-    function reset(){}
 
     
     
@@ -34,15 +37,15 @@ function Users(){
             title: "经营状态",
             key: "status",
             dataIndex: "status",
-            // render(value){
-            //     if(value==1){
-            //         return <Tag color="green">营业中</Tag>
-            //     }else if(value==2){
-            //         return <Tag color="#f50">暂停营业</Tag>
-            //     }else if(value==3){
-            //         return <Tag color="red">已关闭</Tag>
-            //     }
-            // }
+            render(value){
+                if(value==1){
+                    return <Tag color="green">营业中</Tag>
+                }else if(value==2){
+                    return <Tag color="#f50">暂停营业</Tag>
+                }else if(value==3){
+                    return <Tag color="red">已关闭</Tag>
+                }
+            }
         },
         {
             title: "联系电话",
@@ -104,8 +107,6 @@ function Users(){
     const [page, setPage] = useState<number>(1);
     const [pageSize, setPageSize] = useState<number>(10);
     const [formData, setFormData] = useState<SearchType>({
-        page:1,
-        pageSize:10,
         companyName:"",
         contact:"",
         tel:"",
@@ -114,7 +115,6 @@ function Users(){
     const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
     const onSelectedChange = (selectedRowKeys: React.Key[], selectedRows: DataType[]) => {
         // console.log(selectedRowKeys,selectedRows );
-        
         setSelectedRowKeys(selectedRowKeys);
     };
     const rowSelection: TableProps<DataType>['rowSelection'] = {
@@ -122,6 +122,9 @@ function Users(){
         selectedRowKeys,
         onChange: onSelectedChange,
     }
+    const disabled = useMemo(()=>{
+        return !selectedRowKeys.length
+    }, [selectedRowKeys])
 
     const loadData = async () => {
         setLoading(true)
@@ -142,9 +145,21 @@ function Users(){
             [name]: value,
         });
     };
+    function reset(){
+        setFormData({
+            companyName:"",
+            contact:"",
+            tel:"",
+        })
+        setSelectedRowKeys([])
+        setPage(1);
+        setPageSize(10);
+    }
 
-    const confirm = (id:any) => {
-        console.log(id);
+    const confirm = async (id:string) => {
+        const {data} = await deleteUser(id);
+        message.success(data || '成功')
+        loadData();
     }
     const edit = (record: DataType) => {
         console.log(record);
@@ -159,11 +174,11 @@ function Users(){
                     </Col>
                     <Col span={7}>
                         <p>联系人：</p>
-                        <Input name='contact' value={formData.contact} placeholder="请输入联系人" />
+                        <Input name='contact' value={formData.contact} onChange={handleFormData} placeholder="请输入联系人" />
                     </Col>
                     <Col span={7}>
                         <p>联系电话:</p>
-                        <Input name='tel' value={formData.tel} placeholder="请输入联系电话" />
+                        <Input name='tel' value={formData.tel} onChange={handleFormData} placeholder="请输入联系电话" />
                     </Col>
                     <Col span={3}>
                         <Button type="primary" onClick={loadData}>查询</Button>
