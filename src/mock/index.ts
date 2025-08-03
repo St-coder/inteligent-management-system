@@ -431,6 +431,7 @@ Mock.mock('https://www.demo.com/energyData',"get",()=>{
         ]
     }
 })
+// 获取公司数据
 Mock.mock('https://www.demo.com/getCompanyData',"get",()=>{
     return {
         code:200,
@@ -452,5 +453,39 @@ Mock.mock('https://www.demo.com/getCompanyData',"get",()=>{
                 }
             ]
         }
+    }
+})
+
+// 扩展获取随机手机号
+Mock.Random.extend({
+  phone: function () {
+    var phonePrefixs = ['132', '135', '189'] // 自己写前缀哈
+    return this.pick(phonePrefixs) + Mock.mock(/\d{8}/) //Number()
+  }
+})
+
+//租户列表的接口
+Mock.mock("https://www.demo.com/userList","post",(options:any)=>{
+    const {pageSize,page,companyName,contact,phone}=JSON.parse(options.body)
+    return {
+        code:200,
+        message:"成功",
+        data:Mock.mock({
+            [`list|${pageSize}`]:[
+                {
+                    "id":"@string('number',6)",//随机生成一个六位数字id
+                    "name":"@cname",//随机生成一个人名
+                    "status|1":["1","2","3"],
+                    "tel":'@phone',
+                    "business|1": ['制造业','互联网','新媒体','美业','新能源','物流','电商'],
+                    "email":"@email",
+                    "creditCode":"@string('number',18)",
+                    "industryNum":"@string('number',15)",
+                    "organizationCode":"@string('upper',9)",
+                    "legalPerson":"@cname",
+                },
+            ],
+            total:78
+        })
     }
 })
