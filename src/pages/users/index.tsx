@@ -1,11 +1,14 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { Card, Row, Col,Input,Button,Table,Pagination,Popconfirm, Tag, message } from 'antd';
 import type { TableProps } from 'antd';
 import type { DataType, SearchType } from './interface';
 import{ getUserList, deleteUser, batchDeleteUser } from '@/api/userList'
+import UserForm from "./components/UserForm";
+import { setUserData } from "@/store/userSlice";
+import { useDispatch } from 'react-redux';
 
 function Users(){
-    function add(){}
+    const dispatch = useDispatch()
     async function batchDelete(){
         const {data} = await batchDeleteUser(selectedRowKeys)
         message.success(data || '删除成功')
@@ -38,11 +41,11 @@ function Users(){
             key: "status",
             dataIndex: "status",
             render(value){
-                if(value==1){
+                if(value===1){
                     return <Tag color="green">营业中</Tag>
-                }else if(value==2){
+                }else if(value===2){
                     return <Tag color="#f50">暂停营业</Tag>
-                }else if(value==3){
+                }else if(value===3){
                     return <Tag color="red">已关闭</Tag>
                 }
             }
@@ -114,7 +117,6 @@ function Users(){
 
     const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
     const onSelectedChange = (selectedRowKeys: React.Key[], selectedRows: DataType[]) => {
-        // console.log(selectedRowKeys,selectedRows );
         setSelectedRowKeys(selectedRowKeys);
     };
     const rowSelection: TableProps<DataType>['rowSelection'] = {
@@ -126,6 +128,16 @@ function Users(){
         return !selectedRowKeys.length
     }, [selectedRowKeys])
 
+    const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+    const [title, setTitle] = useState<string>('新增');
+    
+    const  add= ()=>{
+        setTitle('新增企业')
+        dispatch(setUserData({}))
+        setIsModalOpen(true)
+    }
+
+
     const loadData = async () => {
         setLoading(true)
         const { data: { list, total } } = await getUserList({ ...formData, page, pageSize });
@@ -136,6 +148,7 @@ function Users(){
 
     useEffect(()=>{
         loadData()
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     },[page,pageSize])
 
     const handleFormData = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -163,9 +176,16 @@ function Users(){
     }
     const edit = (record: DataType) => {
         console.log(record);
+        setTitle('编辑企业')
+        dispatch(setUserData(record))
+        setIsModalOpen(true)
     }
+    const hideModal = useCallback(()=>{
+        setIsModalOpen(false)
+    },[])
     return <>
         <div className="users">
+            <UserForm  isModalOpen={isModalOpen} hideModal={hideModal} title={title} loadData={loadData} />
             <Card className="search">
                 <Row gutter={16}>
                     <Col span={7}>

@@ -2,13 +2,13 @@ export interface DataType{
     id:string;
     name:string;
     status:string;
-    tel:number;
+    tel:string;
     business:string;
     email:string;
     creditCode:string;
     industryNum:string;
     organizationCode:string;
-    legalPerson:string
+    legalPerson:string;
 }
 
 export interface SearchType{
@@ -17,4 +17,11 @@ export interface SearchType{
     companyName?:string;
     contact?:string;
     tel?:string;
+}
+
+export interface ModalProps{
+    isModalOpen: boolean;
+    hideModal: () => void;
+    title: string;
+    loadData: () => void;
 }

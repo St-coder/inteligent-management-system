@@ -49,8 +49,7 @@ function MyHeader(){
             navigate(key)
         }
     };
-    return <div>
-        <Dropdown menu={{ items, onClick }} trigger={['click']} arrow>
+    return <Dropdown menu={{ items, onClick }} trigger={['click']} arrow>
             <div onClick={e => e.preventDefault()}>
             <Space>
                 { welcomeText }
@@ -58,6 +57,5 @@ function MyHeader(){
             </Space>
             </div>
         </Dropdown>
-    </div>
 }
 export default MyHeader;
