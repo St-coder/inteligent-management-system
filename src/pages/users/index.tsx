@@ -120,7 +120,7 @@ function Users(){
         setSelectedRowKeys(selectedRowKeys);
     };
     const rowSelection: TableProps<DataType>['rowSelection'] = {
-        type: 'checkbox',   
+        type: 'checkbox',
         selectedRowKeys,
         onChange: onSelectedChange,
     }

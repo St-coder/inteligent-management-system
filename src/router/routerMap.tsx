@@ -3,7 +3,7 @@ import { lazy } from "react"
 const Dashboard=lazy(()=>import("../pages/dashboard"))
 const UserList = lazy(() => import('../pages/users'));
 const AddUser = lazy (()=>import("../pages/users/addUser"));
-// const Tenement =lazy(()=>import("../pages/estate/tenement"));
+const Tenement =lazy(()=>import("../pages/estate/tenement"));
 const Room = lazy(()=>import("../pages/estate/room") )
 // const Car = lazy(()=>import("../pages/estate/car"))
 const Repair=lazy(()=>import("../pages/repair"))
@@ -22,7 +22,7 @@ export const componentMap:any={
     "/dashboard":<Dashboard/>,
     '/users/list': <UserList/>,
     '/users/add': <AddUser/>,
-    // "/estate/tenement":<Tenement/>,
+    "/estate/tenement":<Tenement/>,
     "/estate/room":<Room/>,
     // "/estate/car":<Car/>,
     "/repair":<Repair/>,
