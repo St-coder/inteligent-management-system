@@ -1,6 +1,6 @@
 
 import { Row, Col, Button, Input, Card,Table,Tag, Progress,Badge, Popconfirm   } from "antd"
-import { useState } from "react"
+import { useCallback, useMemo, useState } from "react"
 import type { TableColumnsType } from 'antd';
 import type { TableProps } from 'antd';
 import EditTenement from "./components/EditTenement";
@@ -30,63 +30,63 @@ function Room() {
         console.log(formData, 888);
     }
 
-    const confirm = ()=>{
+    const confirm = useCallback(()=>{
+        
+        },[])
+    const cancel = useCallback(()=>{
+        console.log('Cancel');
+    }, [])
 
-    }
-    const cancel = ()=>{
+    
+    const columns: TableProps<DataType>['columns'] = useMemo(() =>[
 
-    }
-
-    // const [columns, setColumns] = useState<TableColumnsType<DataType>>([
-      const columns: TableProps<DataType>['columns'] =[
-
-        { title: 'No.',dataIndex: 'name',key: 'name',
-            render(text,record,index){
-                return index+1
-            }
+    { title: 'No.',dataIndex: 'name',key: 'name',
+        render(text,record,index){
+            return index+1
+        }
+    },
+    { title: '楼宇名称',dataIndex: 'name',key: 'name', },
+    { title: '负责人',dataIndex: 'manager',key: 'manager', },
+    { title: '负责人电话',dataIndex: 'phone',key: 'phone', },
+    { title: '使用状态',dataIndex: 'status',key: 'status',
+        render(text) {
+            return <Tag bordered={false} color={text === "1" ? 'green' : 'red'}>
+                {text === "1" ? '正常' : '停用'}
+            </Tag>
+        }
+    },
+    { title: '空置率',dataIndex: 'emptyRate',key: 'emptyRate',
+        render(text,record,index){
+            return <Progress percent={Number(text)} size="small" />
+        }
         },
-        { title: '楼宇名称',dataIndex: 'name',key: 'name', },
-        { title: '负责人',dataIndex: 'manager',key: 'manager', },
-        { title: '负责人电话',dataIndex: 'phone',key: 'phone', },
-        { title: '使用状态',dataIndex: 'status',key: 'status',
-            render(text) {
-                return <Tag bordered={false} color={text === "1" ? 'green' : 'red'}>
-                    {text === "1" ? '正常' : '停用'}
-                </Tag>
-            }
+    { title: '物业费率',dataIndex: 'propertyRate',key: 'propertyRate',
+        render(text,record,index){
+            return <Badge color="#f50" text={text} />                
+        }
         },
-        { title: '空置率',dataIndex: 'emptyRate',key: 'emptyRate',
-            render(text,record,index){
-                return <Progress percent={Number(text)} size="small" />
-            }
-         },
-        { title: '物业费率',dataIndex: 'propertyRate',key: 'propertyRate',
-            render(text,record,index){
-                return <Badge color="#f50" text={text} />                
-            }
-         },
-        { title: '操作',dataIndex: 'operation',key: 'operation', 
-            render(text,record,index){
-                return <>
-                    <Button type="primary" onClick={()=>edit(record)}>编辑</Button>
+    { title: '操作',dataIndex: 'operation',key: 'operation', 
+        render(text,record,index){
+            return <>
+                <Button type="primary" onClick={()=>edit(record)}>编辑</Button>
 
-                    <Popconfirm
-                        title="Delete the task"
-                        description="确定要删除吗?"
-                        onConfirm={confirm}
-                        onCancel={cancel}
-                        okText="是的"
-                        cancelText="等一下"
-                    >
-                        
-                    <Button type="dashed" onClick={()=>confirmDelete(record.id)}>删除</Button>
-                    </Popconfirm>
+                <Popconfirm
+                    title="Delete the task"
+                    description="确定要删除吗?"
+                    onConfirm={confirm}
+                    onCancel={cancel}
+                    okText="是的"
+                    cancelText="等一下"
+                >
+                    
+                <Button type="dashed" className="ml" onClick={()=>confirmDelete(record.id)}>删除</Button>
+                </Popconfirm>
 
-                </>
-            }
-        },
-    ]
-// )
+            </>
+        }
+    },
+], [])
+    
 
 const [dataSource, setDataSource] = useState<DataType[]>([
     {
@@ -132,7 +132,7 @@ const hideModal=()=>{
                     </Col>
                     <Col span={10}>
                         <Button type="primary" onClick={getList}>查询</Button>
-                        <Button onClick={resetForm}>重置</Button>
+                        <Button className="ml" onClick={resetForm}>重置</Button>
                     </Col>
                 </Row>
             </Card>
