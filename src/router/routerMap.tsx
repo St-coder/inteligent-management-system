@@ -5,7 +5,7 @@ const UserList = lazy(() => import('../pages/users'));
 const AddUser = lazy (()=>import("../pages/users/addUser"));
 const Tenement =lazy(()=>import("../pages/estate/tenement"));
 const Room = lazy(()=>import("../pages/estate/room") )
-// const Car = lazy(()=>import("../pages/estate/car"))
+const Car = lazy(()=>import("../pages/estate/car"))
 const Repair=lazy(()=>import("../pages/repair"))
 const Contract=lazy(()=>import("../pages/finance/contract"))
 const Surrender=lazy(()=>import("../pages/finance/surrender"))
@@ -24,7 +24,7 @@ export const componentMap:any={
     '/users/add': <AddUser/>,
     "/estate/tenement":<Tenement/>,
     "/estate/room":<Room/>,
-    // "/estate/car":<Car/>,
+    "/estate/car":<Car/>,
     "/repair":<Repair/>,
     "/finance/contract":<Contract/>,
     "/finance/surrender":<Surrender/>,

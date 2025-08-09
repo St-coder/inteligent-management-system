@@ -7,3 +7,26 @@ export interface DataType {
   emptyRate: string;
   propertyRate: string;
 }
+
+export interface ChargeDataType {
+    key: string;
+    orderNo: string;
+    date: string;
+    carNo: string;
+    type: string;
+    startDate: string;
+    time: string;
+    count: string;
+    cost: string;
+}
+
+export interface CarDataType {
+    key: string;
+    carNo: string;
+    name: string;
+    tel: string;
+    type: string;
+    rest: string;
+    time: string;
+    pic: string;
+}
