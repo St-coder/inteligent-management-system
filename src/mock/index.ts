@@ -522,3 +522,31 @@ Mock.mock('https://www.demo.com/editUser','post',(options:any)=>{
     data:"操作成功"
   }
 })
+
+
+//获取房间列表的接口
+function generateRooms() {
+    const rooms = [];
+    for (let i = 0; i < 50; i++) {
+        const floor = 1 + Math.floor(i / 6); // 每6个房间一层
+        const roomNumber = floor * 100 + (101 + (i % 6)); // 计算房间号
+        rooms.push({
+            roomNumber,
+            decorationType: Mock.Random.pick(['毛坯', '精装']),
+            area: Mock.Random.integer(70, 300),
+            unitPrice: Mock.Random.integer(1, 3),
+            src:'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png'
+        });
+    }
+    return rooms;
+  }
+  Mock.mock('https://www.demo.com/roomList', 'post', (options:any) => {
+    console.log("收到房间id",JSON.parse(options.body).roomid)
+    return {
+        code: 200,
+        message: "成功",
+        data: {
+            rooms: generateRooms()
+        }
+    };
+  });
