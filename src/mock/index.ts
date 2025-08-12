@@ -481,3 +481,27 @@ function generateRooms() {
         }
     };
   });
+
+    //合同管理
+  Mock.mock('https://www.demo.com/contractList', 'post', (options: any) => {
+  const {page,pageSize}=JSON.parse(options.body);
+  console.log("后端合同管理接到参数",JSON.parse(options.body))
+  return {
+    code: 200,
+    message: "成功",
+    data: Mock.mock({
+      [`list|${pageSize}`]: [{
+        'contractNo':'@string("number", 6)',
+        'type|1': ['租赁合同','自定义合同','购买合同'],
+        'name|1': ["房屋租赁合同通用模版","车位租赁合同通用模版","商业房产买卖合同"],  
+        "startDate|1":['2023-01-01','2023-03-05','2023-04-01'],
+        "endDate|1":['2024-01-01','2024-03-05','2024-04-01'],
+        'jia|1': ['万物科技有限公司','大鱼网络科技','六六信息技术有限公司'],  
+        'yi': '天明物业有限公司', 
+        'status|1': ["1","2","3"],  
+      }],
+      "total": 54
+    })
+    // 生成55条数据
+  }
+});
