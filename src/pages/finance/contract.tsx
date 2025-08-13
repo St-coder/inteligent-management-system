@@ -3,16 +3,20 @@ import type { TableProps } from 'antd';
 import type { PaginationProps } from 'antd';
 
 import { use, useState,useEffect } from 'react'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 
 import { SearchType, DataType } from './interface'
 import { getContractList } from '../../api/contract'
 import { useDispatch, useSelector } from 'react-redux';
-import { setData, setTotal } from '@/store/contractSlice';
-
+import { setData, setTotal, setFormList, setCurrent, setSize } from '@/store/contractSlice';
 
 function Contract(){
     const dispatch = useDispatch();
-    const {data, total} = useSelector((state:any) => state.contractReducer);
+    const navigate = useNavigate();
+    
+    const [searchParams] = useSearchParams()
+    const isReturn = searchParams.has('return')
+    const {data, total, formList, current, size} = useSelector((state:any) => state.contractReducer);
 
     const [formData, setFormData]=useState<SearchType>({
         contractNo:"",
@@ -26,13 +30,18 @@ function Contract(){
             ...formData,
             [name]:value
         })
+        dispatch(setFormList({
+            ...formList,
+            [name]:value
+        }))
     }
 
-    // const [data, setData]=useState<DataType[]>([]);
+    
     const [loading, setLoading]=useState(false);
     const [pageNum, setPageNum]=useState(1);
     const [pageSize, setPageSize]=useState(10);
-const loadData = async() => {
+const loadData = async(pageNum:number,pageSize:number) => {
+
     setLoading(true);
     let {data:{list,total}} = await getContractList({
        ...formData,
@@ -45,30 +54,48 @@ const loadData = async() => {
     dispatch(setTotal(total));
 };
     const getList = () => { 
-            loadData();
+            loadData(pageNum,pageSize);
     };
+const changePage:PaginationProps["onChange"] = (page:number,  pageSize:number) => {
+    setPageNum(page);
+    setPageSize(pageSize);
+    
+    dispatch(setSize(pageSize));
+    dispatch(setCurrent(page));
+    loadData(page,pageSize);
+}
 const reset = () => {
     setFormData({
         contractNo:"",
         person:"",
         tel:"",
     })
-    getList();
+    setFormList({
+        contractNo:"",
+        person:"",
+        tel:"",
+    })
+
+    changePage(1,10);
 }
 
 
 useEffect(()=>{
-    loadData()
-},[pageNum,pageSize])
+    if(!isReturn || !data.length){
+        loadData(pageNum,pageSize)
+    }
+    if(isReturn){
+        setPageNum(current);
+        setPageSize(size);
+        setFormData(formList);
+    }
+},[])
 
 
-const changePage:PaginationProps["onChange"] = (page:number,    pageSize:number) => {
-    setPageNum(page);
-    setPageSize(pageSize);
-}
+
 
     const detail=(contractNo:string)=>{
-        // setDetailVisible(true);
+        navigate("/finance/surrender?contractNo="+contractNo)
     }
 
     const columns:TableProps<DataType>["columns"]=[
@@ -162,7 +189,7 @@ const changePage:PaginationProps["onChange"] = (page:number,    pageSize:number)
         <Card >
             <Table columns={columns} dataSource={data} pagination={false} loading={loading}  rowKey={(record) => record.contractNo}/>
 
-            <Pagination className='mt' showQuickJumper showSizeChanger total={total} current={pageNum} pageSize={pageSize} onChange={changePage} />
+            <Pagination className='mt fr' showQuickJumper showSizeChanger total={total} current={pageNum} pageSize={pageSize} onChange={changePage} />
         </Card>
 
     </div>
