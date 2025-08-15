@@ -20,3 +20,13 @@ export interface ContractSearchParams extends SearchType {
     pageNum:number;
     pageSize:number;
 }
+
+
+export interface BillSearchData{
+    page:number;
+    pageSize:number;
+    no:string;
+    status:string;
+    startDate:string;
+    endDate:string;
+}
