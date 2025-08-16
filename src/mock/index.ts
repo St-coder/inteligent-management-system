@@ -534,3 +534,66 @@ Mock.mock('https://www.demo.com/billList', 'post', (options: any) => {
     // 生成55条数据
   }
 });
+
+
+// 设备管理
+Mock.mock('https://www.demo.com/equipmentList', 'post', (options: any) => {
+  const {page,pageSize,companyName,contact,phone}=JSON.parse(options.body);
+  console.log("后端账单管理接到参数",JSON.parse(options.body))
+  return {
+    code: 200,
+    message: "成功",
+    data: Mock.mock({
+      [`data|${pageSize}`]: [
+        {
+        "id": "@guid",
+        "name": "@ctitle(5,10)设备",  // 生成中文设备名称
+        "no": "@string('number',8)",  // 8位设备编号
+        "person": "@cname",  // 生成负责人姓名
+        "tel": /^1[3-9]\d{9}$/,  // 有效手机号格式
+        "time": "@datetime('yyyy-MM-dd HH:mm')",  // 生成安装时间
+        "status|1": ["1","2","3"],  // 设备状态
+        "last": "@datetime('yyyy-MM-dd HH:mm')",  // 最后维护时间
+        "type|1": ["电力","空调","安防","消防"],  // 设备类型
+        "rest": "@string('number',2)",
+        "from": "@ctitle(3,6)厂商"  // 生成厂商名称
+      }
+    ],
+      "total": 54
+    })
+    // 生成55条数据
+  }
+});
+
+
+
+//账号管理
+// Mock.mock('https://www.demo.com/accountList', 'post', (options: any) => {
+// //  const {page,pageSize,companyName,contact,phone}=JSON.parse(options.body);
+//   console.log("后端账号管理接到参数",options)
+//   return {
+//     code: 200,
+//     message: "成功",
+//     data: {
+//       list:[
+//         {
+//           id:1001,accountName:"xuchao",auth:"admin",person:"徐超",tel:"188888888888",department:"总裁办",menu:menuList
+//         },
+//         {
+//           id:1002,accountName:"user01",auth:"user",person:"王丽丽",tel:"17777777777",department:"网推部",menu:userMenuList
+//         },
+//         {
+//           id:1003,accountName:"manager01",auth:"manager",person:"刘伟",tel:"16666666666",department:"财务部",menu:managerMenuList
+//         },
+//         {
+//           id:1004,accountName:"user02",auth:"customize",person:"张安定",tel:"15555555555",department:"企划部",menu:customizeMenuList
+//         },
+//         {
+//           id:1005,accountName:"laowang",auth:"user",person:"王大大",tel:"14444444444",department:"总裁办",menu:userMenuList
+//         }
+
+//       ],
+//       total:5
+//     }
+//   }
+// });
