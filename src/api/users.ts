@@ -1,4 +1,5 @@
 import { post, get } from "../utils/request";
+import { SearchAccountType } from "@/pages/settings/interface";
 
 interface loginData {
     userName: string,
@@ -10,4 +11,7 @@ export function login(data:loginData){
 
 export function getMenuList(){
     return get("/menu")
+}
+export function getAccountList(params: SearchAccountType){
+    return post("/accountList", params)
 }

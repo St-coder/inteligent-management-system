@@ -24,8 +24,8 @@ function useDataList<T extends MyFormData, H>(initialFormdata: T,  fetchData: Da
     const loadData = useCallback(async () => {
         setLoading(true)
         try {
-            const {data: {data,total}} = await fetchData({...formData, page, pageSize})
-            setDataList(data)
+            const {data: {list,total}} = await fetchData({...formData, page, pageSize})
+            setDataList(list)
             setTotal(total)
             setLoading(false)
         } catch (error) {
@@ -59,6 +59,7 @@ function useDataList<T extends MyFormData, H>(initialFormdata: T,  fetchData: Da
 
     const reset = ()=>{
         setFormData(initialFormdata)
+        onChangePage(1,10)
     }
 
     return {formData, handleChange, onChangePage, reset, dataList, total, loading, page, pageSize, loadData}

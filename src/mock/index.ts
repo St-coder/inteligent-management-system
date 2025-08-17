@@ -158,6 +158,75 @@ const menuList = [
     }
 ]
 
+const userMenuList = [
+    {
+        "icon": "DashboardOutlined",
+        "label": "工作台",
+        "key": "/dashboard",
+    },
+    {
+
+        "icon": "TeamOutlined",
+        "label": "租户管理",
+        "key": "/users",
+        "children": [
+            {
+                "icon": "UnorderedListOutlined",
+                "label": "租户列表",
+                "key": "/users/list",
+            },
+            {
+                "icon": "UserAddOutlined",
+                "label": "新增租户",
+                "key": "/users/add",
+            }
+        ]
+    },
+    {
+        "icon": "LaptopOutlined",
+        "label": "物业管理",
+        "key": "/estate",
+        "children": [
+            {
+
+                "icon": "InsertRowLeftOutlined",
+                "label": "楼宇管理",
+                "key": "/estate/tenement",
+
+            },
+            {
+                "icon": "BankOutlined",
+                "label": "房间管理",
+                "key": "/estate/room",
+            },
+            {
+                "icon": "TruckOutlined",
+                "label": "车辆信息",
+                "key": "/estate/car",
+            }
+        ]
+    },
+    {
+        "icon": "ToolOutlined",
+        "label": "报修管理",
+        "key": "/repair"
+    },
+    {
+        "icon": "ToolOutlined",
+        "label": "设备管理",
+        "key": "/equipment",
+    },
+    {
+        "icon": "ThunderboltOutlined",
+        "label": "能源消耗",
+        "key": "/energy",
+    },
+    {
+        "icon": "UserOutlined",
+        "label": "个人中心",
+        "key": "/personal",
+    }
+]
 
 const managerMenuList = [
     {
@@ -544,7 +613,7 @@ Mock.mock('https://www.demo.com/equipmentList', 'post', (options: any) => {
     code: 200,
     message: "成功",
     data: Mock.mock({
-      [`data|${pageSize}`]: [
+      [`list|${pageSize}`]: [
         {
         "id": "@guid",
         "name": "@ctitle(5,10)设备",  // 生成中文设备名称
@@ -568,32 +637,32 @@ Mock.mock('https://www.demo.com/equipmentList', 'post', (options: any) => {
 
 
 //账号管理
-// Mock.mock('https://www.demo.com/accountList', 'post', (options: any) => {
-// //  const {page,pageSize,companyName,contact,phone}=JSON.parse(options.body);
-//   console.log("后端账号管理接到参数",options)
-//   return {
-//     code: 200,
-//     message: "成功",
-//     data: {
-//       list:[
-//         {
-//           id:1001,accountName:"xuchao",auth:"admin",person:"徐超",tel:"188888888888",department:"总裁办",menu:menuList
-//         },
-//         {
-//           id:1002,accountName:"user01",auth:"user",person:"王丽丽",tel:"17777777777",department:"网推部",menu:userMenuList
-//         },
-//         {
-//           id:1003,accountName:"manager01",auth:"manager",person:"刘伟",tel:"16666666666",department:"财务部",menu:managerMenuList
-//         },
-//         {
-//           id:1004,accountName:"user02",auth:"customize",person:"张安定",tel:"15555555555",department:"企划部",menu:customizeMenuList
-//         },
-//         {
-//           id:1005,accountName:"laowang",auth:"user",person:"王大大",tel:"14444444444",department:"总裁办",menu:userMenuList
-//         }
+Mock.mock('https://www.demo.com/accountList', 'post', (options: any) => {
+//  const {page,pageSize,companyName,contact,phone}=JSON.parse(options.body);
+  console.log("后端账号管理接到参数",options)
+  return {
+    code: 200,
+    message: "成功",
+    data: {
+      list:[
+        {
+          id:1001,accountName:"xuchao",auth:"admin",person:"徐超",tel:"188888888888",department:"总裁办",menu:menuList
+        },
+        {
+          id:1002,accountName:"user01",auth:"user",person:"王丽丽",tel:"17777777777",department:"网推部",menu:userMenuList
+        },
+        {
+          id:1003,accountName:"manager01",auth:"manager",person:"刘伟",tel:"16666666666",department:"财务部",menu:managerMenuList
+        },
+        {
+          id:1004,accountName:"user02",auth:"customize",person:"张安定",tel:"15555555555",department:"企划部",menu:customizeMenuList
+        },
+        {
+          id:1005,accountName:"laowang",auth:"user",person:"王大大",tel:"14444444444",department:"总裁办",menu:userMenuList
+        }
 
-//       ],
-//       total:5
-//     }
-//   }
-// });
+      ],
+      total:5
+    }
+  }
+});

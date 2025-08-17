@@ -7,7 +7,7 @@ import { baseRouters }  from './router'
 import { setMuneList } from './store/authSlice';
 import { useDispatch } from 'react-redux';
 import { getMenuList } from './api/users';
-
+import { Spin  } from 'antd';
 function App() {
   const { token} = useSelector((state:any)=> state.authReducer);
   const dispatch = useDispatch()
@@ -37,13 +37,15 @@ function App() {
 
   if(!routers){
     return (
-      <div className="App">您稍等...</div>
+      <div className="App">
+        <Spin />
+      </div>
     );
   }
 
   return (
       <div className="App">
-        <Suspense fallback={<div>Loading...</div>}>
+        <Suspense fallback={<Spin />}>
           <RouterProvider router={routers} />
         </Suspense>
       </div>
