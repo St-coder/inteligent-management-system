@@ -12,6 +12,11 @@ export function login(data:loginData){
 export function getMenuList(){
     return get("/menu")
 }
+
+export function getButtonList(){
+    return get("/buttonList")
+}
+
 export function getAccountList(params: SearchAccountType){
     return post("/accountList", params)
 }

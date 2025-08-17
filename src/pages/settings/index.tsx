@@ -10,6 +10,8 @@ import type { PaginationProps, TableProps,TreeDataNode, TreeProps,  } from "antd
 
 import { useSelector } from "react-redux"
 
+import withPermissions from "@/utils/withPermissions"
+
 function Settings() {
     const columns:TableProps<AccountListType>['columns'] = [{
         title: '账号名称',
@@ -36,16 +38,19 @@ function Settings() {
         key: 'operation',
         render(text: string, record: any){
         return <> 
-        <Button type="primary" size="small" onClick={()=>{ edit(record.menu,record.accountName) }}>编辑</Button>
-        <Popconfirm
-                        title="操作提示"
-                        description="确认要删除当前账号吗？"
-                        okText="是"
-                        cancelText="否"
-                    >
-                        {/* <AuthButton size="small" type="primary" danger>删除账号</AuthButton> */}
-                        <Button size="small" type="primary" className="ml" danger>删除账号</Button>
-                    </Popconfirm>
+        <AuthButton type="primary" permissionCode="edit" size="small" onClick={()=>{ edit(record.menu,record.accountName) }}>编辑</AuthButton>
+
+        <AuthButton size="small" permissionCode="delete" type="primary" className="ml" danger>删除账号1</AuthButton>
+
+        <AuthPopconfirm
+            title="操作提示"
+            description="确认要删除当前账号吗？"
+            okText="是"
+            cancelText="否"
+            permissionCode="add"
+        >
+            <Button size="small"  type="primary" className="ml" danger>删除账号2</Button>
+        </AuthPopconfirm>
 
 
             </>
@@ -182,9 +187,14 @@ const onCheck:TreeProps['onCheck']=(checkedKeys)=>{
     
     setCheckedKeys(checkedKeys as React.Key[])
 }
-const handle=()=>{
+    const handle=()=>{
         console.log(checkedKeys,accountName)
     }
+
+    const AuthButton = withPermissions(Button)
+    const AuthPopconfirm = withPermissions(Popconfirm)
+
+    
 
    return <div>
         <Card>
@@ -211,6 +221,7 @@ const handle=()=>{
                         onCheck={onCheck}
                         treeData={treeData}
                         checkedKeys={checkedKeys}
+                        virtual={false}
                     />
                 </Card>
 

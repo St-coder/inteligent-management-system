@@ -413,8 +413,18 @@ Mock.mock('https://www.demo.com/menu', 'get', (options:any)=>{
             data: null
         }
     }
-    
+})
 
+Mock.mock('https://www.demo.com/buttonList', 'get', (options:any)=>{
+    return {
+        code:200,
+        message:"请求成功",
+        data:[
+            'add',
+            'edit',
+            // 'delete',
+        ]
+    }
 })
 
 //dashboard里 图表接口

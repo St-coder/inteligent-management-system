@@ -6,11 +6,18 @@ export const authSlice = createSlice({
         token: sessionStorage.getItem('token') || null,
         userInfo: sessionStorage.getItem('userInfo') ? JSON.parse(sessionStorage.getItem('userInfo') || '{}') : null,
         menuList: [],
+        buttonList: [],
     },
     reducers: {
         setToken(state, action){
             state.token = action.payload;
             sessionStorage.setItem('token', action.payload)
+        },
+        setButtonList(state, action){
+            state.buttonList = action.payload;
+        },
+        clearButtonList(state){
+            state.buttonList = [];
         },
         clearToken(state){
             state.token = null;
@@ -33,6 +40,6 @@ export const authSlice = createSlice({
     }
 })
 
-export const { setToken, clearToken, setUserInfo, clearUserInfo, setMuneList, clearMuneList } = authSlice.actions;
+export const { setToken, clearToken, setUserInfo, clearUserInfo, setMuneList, clearMuneList, setButtonList, clearButtonList } = authSlice.actions;
 
 export default authSlice.reducer;
